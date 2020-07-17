@@ -1,0 +1,35 @@
+<app-encabezado-inicio-sesion></app-encabezado-inicio-sesion>
+
+<div class="hero-wrap img" style="background-image: url(assets/images/bg_3.jpeg);">
+ 
+    <div class="container">
+        <!-- main -->
+        <div class="main-agileits">
+            <div class="mainw3-agileinfo form">
+                <div id="login">
+                    <form>
+                        <div class="field-wrap">
+                            <input id="campoNombreUsuario" placeholder="Nombre de usuario" type="text" required autocomplete="off" 
+                            data-toggle="tooltip" data-placement="top" title="Digite su nombre de usuario"/>
+
+                            <div *ngIf = "nombreDeUsuarioVacio">
+                                <label class="text-warning">Debe escribir un nombre de usuario</label>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <input id="campoContrasenia" placeholder="Contraseña" type="password" required autocomplete="off" 
+                            data-toggle="tooltip" data-placement="top" title="Digite su contraseña"/>
+
+                            <div *ngIf = "contraseniaVacia">
+                                <label class="text-warning">Debe escribir una contraseña</label>
+                            </div>
+                        </div>
+                        <div class="button button-block" (click) = "ObtenerCamposInicioSesion()">Ingresar</div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- //main -->
+    </div>
+</div>

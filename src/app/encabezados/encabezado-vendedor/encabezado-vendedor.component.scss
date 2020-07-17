@@ -1,0 +1,313 @@
+@import '../../../assets/scss/bootstrap/bootstrap';
+@import '../../../assets/scss/bootstrap/variables';
+
+
+.ftco-navbar-light {
+	background: transparent!important;
+	position: absolute;
+	top: 20px;
+	left: 0;
+	right: 0;
+	z-index: 3;
+	@include media-breakpoint-down(md) {
+		background: $black!important;
+		position: relative;
+		top: 0;
+	}
+
+	.navbar-brand {
+		color: $white;
+		&:hover{
+			color: $black;
+		}
+		@include media-breakpoint-down(md){
+			color: $white;
+
+		}
+	}
+
+	.custom-nav{
+		border: 2px solid #FFFFFF;
+		border-radius: 8px;
+		color: $white;
+		height: 5px !important;
+	}
+
+	.nav-item{
+		padding-right: 10%
+	}
+	
+	.navbar-nav {
+		@include media-breakpoint-down(md){
+			padding-bottom: 10px;
+		}
+		> .nav-item {
+			> .nav-link {
+				font-size: 17px;
+				padding-top: .9rem;
+				padding-bottom: .9rem;
+				padding-left: 20px;
+				padding-right: 20px;
+				color: $white;
+				font-weight: 400;
+				&:hover {
+					color: #a8dadc;
+				}
+				opacity: 1!important;
+				@include media-breakpoint-down(md){
+					padding-left: 0;
+					padding-right: 0;
+					padding-top: .5em;
+					padding-bottom: .5em;
+					color: rgba(255,255,255,.7);
+					&:hover{
+						color: $white;
+					}
+				}
+			}
+
+			.dropdown-menu{
+				border: none;
+				background: $white;
+				-webkit-box-shadow: 0px 10px 34px -20px rgba(0,0,0,0.41);
+				-moz-box-shadow: 0px 10px 34px -20px rgba(0,0,0,0.41);
+				box-shadow: 0px 10px 34px -20px rgba(0,0,0,0.41);
+				
+			}
+
+			
+			&.ftco-seperator {
+				position: relative;
+				margin-left: 20px;
+				padding-left: 20px;
+				@include media-breakpoint-down(md) {
+					padding-left: 0;
+					margin-left: 0;
+				}
+				&:before {
+					position: absolute;
+					content: "";
+					top: 10px;
+					bottom: 10px;
+					left: 0;
+					width: 2px;
+					background: rgba($white, .05);
+					@include media-breakpoint-down(md) {
+						display: none;
+					}
+				}
+			}
+			&.cta-custom {
+				> a {
+					color: $white;
+					border: 2px solid #FFFFFF;
+					padding-top: .5rem;
+					padding-bottom: .5rem;
+					padding-left: 20px;
+					padding-right: 20px;
+					margin-top: 4px;
+					@include border-radius(5px);
+					span {
+						display: inline-block;
+						color: $white;
+					}
+					&:hover{
+						color: $white;
+						border: 2px solid #fdab44;
+						background: #fdab44 !important;
+					}
+				}
+				&.cta-colored {
+					a{
+						border: 1px solid #fdab44;
+						background: #fdab44 !important;
+					}
+				}
+			}
+			&.cta {
+				> a {
+					color: $white;
+					border: 1px solid $primary;
+					padding-top: .5rem;
+					padding-bottom: .5rem;
+					padding-left: 20px;
+					padding-right: 20px;
+					margin-top: 4px;
+					background: $primary;
+					@include border-radius(5px);
+					span {
+						display: inline-block;
+						color: $white;
+					}
+					&:hover{
+						color: $white;
+						background: $primary;
+						border: 1px solid $primary;
+					}
+				}
+				&.cta-colored {
+					a{
+						border: 1px solid #fdab44;
+						background: #fdab44 !important;
+					}
+				}
+			}
+			&.active {
+				> a {
+					color: rgba(255,255,255,.5);
+				}
+			}
+		}
+	}
+	.navbar-toggler {
+		border: none;
+		color: rgba(255,255,255,.5)!important;
+		cursor: pointer;
+		padding-right: 0;
+		text-transform: uppercase;
+		font-size: 16px;
+		letter-spacing: .1em;
+		&:hover, &:focus {
+			text-decoration: none;
+			color: $primary;
+			outline: none !important;
+		}
+	}
+	
+	&.scrolled  {
+		position: fixed;
+		right: 0;
+		left: 0;
+		top: 0;
+		margin-top: -130px;
+		background: $white!important;
+		box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+		.img-change{
+			content: url(../../../assets/images/logoFondo.png) !important;
+		}
+		.nav-item {
+			> .nav-link{
+				@include media-breakpoint-down(md){
+					padding-left: 0 !important;
+					padding-right: 0 !important;
+					padding-bottom: 0 !important;
+				}
+			}
+			&.active {
+				> a {
+					color: $primary!important;
+				}
+			}
+			&.cta-custom {
+				> a {
+					color: $white;
+					border: 2px solid #fdab44 !important;
+					padding-top: .5rem;
+					padding-bottom: .5rem;
+					padding-left: 20px;
+					padding-right: 20px;
+					margin-top: 4px;
+					@include border-radius(5px);
+					span {
+						display: inline-block;
+						color: $white;
+					}
+					&:hover{
+						color: $white;
+						border: 2px solid #fdab44;
+						background: #fdab44 !important;
+					}
+				}
+				&.cta-colored {
+					a{
+						border: 1px solid #fdab44;
+						background: #fdab44 !important;
+					}
+				}
+			}
+			&.cta {
+				> a {
+					color: $white !important;
+					background: $primary;
+					border: none !important;
+					padding-top: .5rem!important;
+					padding-bottom: .5rem !important;
+					padding-left: 20px !important;
+					padding-right: 20px !important;
+					margin-top: 6px !important;
+					@include border-radius(5px);
+					span {
+						display: inline-block;
+						color: $white !important;
+					}
+				}
+				&.cta-colored {
+					span {
+						border-color: $primary;
+					}
+				}
+			}
+		}
+
+		.navbar-nav {
+			@include media-breakpoint-down(md) {
+				background: none;
+				border-radius: 0px;
+				padding-left: 0rem!important;
+				padding-right: 0rem!important;
+			}
+		}
+
+		.navbar-toggler {
+			border: none;
+			color: rgba(0,0,0,.5)!important;
+			border-color: rgba(0,0,0,.5)!important;
+			cursor: pointer;
+			padding-right: 0;
+			text-transform: uppercase;
+			font-size: 16px;
+			letter-spacing: .1em;
+
+		}
+		.nav-link {
+			padding-top: .9rem!important;
+			padding-bottom: .9rem!important;
+			color: $black!important;
+			&.active {
+				color: $primary!important;
+			}
+		}
+		&.awake {
+			margin-top: 0px;
+			transition: .3s all ease-out;
+		}
+		&.sleep {
+			transition: .3s all ease-out;	
+		}
+
+		.navbar-brand {
+			color: $black;
+		}
+	}
+}
+
+.navbar-brand {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.itemActive{
+	cursor: pointer;
+}
+
+.itemActive a{
+	color: 	#a8dadc !important;
+	text-decoration: underline !important;
+	
+}
+
+a:hover{
+	cursor: pointer;
+}
+
+

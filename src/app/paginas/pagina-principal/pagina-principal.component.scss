@@ -1,0 +1,167 @@
+@import '../../../assets/scss/bootstrap/bootstrap';
+@import '../../../assets/scss/bootstrap/variables';
+
+@mixin gradient-background(){
+	background: rgba(32,125,255,1);
+	background: -moz-linear-gradient(left, rgba(32,125,255,1) 0%, rgba(161,106,232,1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(32,125,255,1)), color-stop(100%, rgba(161,106,232,1)));
+	background: -webkit-linear-gradient(left, rgba(32,125,255,1) 0%, rgba(161,106,232,1) 100%);
+	background: -o-linear-gradient(left, rgba(32,125,255,1) 0%, rgba(161,106,232,1) 100%);
+	background: -ms-linear-gradient(left, rgba(32,125,255,1) 0%, rgba(161,106,232,1) 100%);
+	background: linear-gradient(to right, rgba(32,125,255,1) 0%, rgba(161,106,232,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#207dff', endColorstr='#a16ae8', GradientType=1 );
+}
+
+.hero-wrap{
+	width: 100%;
+	height: 500px;
+	position: relative;
+	@include media-breakpoint-down(md){
+		height: 250px;
+	}
+	.overlay{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		content: '';
+		opacity: .8;
+		background: $black;
+		@include gradient-background();
+	}
+	.slider-text {
+		height: 450px;
+		z-index: 0;
+		overflow: hidden;
+		@include media-breakpoint-down(md){
+			text-align: center;
+			height: 200px;
+		}
+		.subheading{
+			color: $black;
+			font-weight: 700;
+			font-size: 16px;
+			letter-spacing: 4px;
+			text-transform: uppercase;
+			display: inline-block;
+			color: $black;
+		}
+		.text{
+			position: relative;
+			z-index: 1;
+		}
+		h1 {
+			font-size: 54px;
+			color: $white;
+			line-height: 1.2;
+			font-weight: 400;
+			span{
+				font-weight: 700;
+				// color: darken($primary,10%);
+			}
+			@include media-breakpoint-down(md) {
+				font-size: 50px;
+			}
+			@include media-breakpoint-down(sm) {
+				font-size: 40px;
+			}
+		}
+		p {
+			color: rgba(255,255,255,.8);
+			font-weight: 400;
+			.number{
+				color: $secondary;
+			}
+		}
+		.btn-custom{
+			color: $white;
+			background: $primary;
+			padding: 10px 20px;
+		}
+	}
+	&.hero-wrap-2{
+		height: 100px !important;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: top center;
+		@include media-breakpoint-down(lg){
+			background-position: top center !important;
+		}
+		.slider-text{
+			height: 100px !important;
+			@include media-breakpoint-down(md){
+				text-align: center;
+				height: 100px !important;
+			}
+		}
+	}
+}
+
+
+.ftco-section {
+	padding: 6em 0;
+	position: relative;
+	@include media-breakpoint-down(sm){
+		padding: 6em 0;
+	}
+}
+
+.ftco-no-pt{
+	padding-top: 0 !important;
+}
+.ftco-no-pb{
+	padding-bottom: 0 !important;
+}
+
+//TOP JOB CATEGORY
+.category-wrap{
+	background: $white;
+	@include media-breakpoint-up(lg){
+		margin-top: -70px;
+		-webkit-box-shadow: 0px 3px 14px -4px rgba(0,0,0,0.1);
+		-moz-box-shadow: 0px 3px 14px -4px rgba(0,0,0,0.1);
+		box-shadow: 0px 3px 14px -4px rgba(0,0,0,0.1);
+	}
+}
+.top-category{
+	padding: 20px;
+	background: $white;
+	border-left: 1px solid rgba(0,0,0,.08);
+	@include transition(.3s);
+	&.no-border-left{
+		border-left: none;
+	}
+	h3{
+		font-size: 20px;
+		a{
+			color: $black;
+		}
+	}
+	.icon{
+		font-size: 40px;
+		color: $primary;
+	}
+	p{
+		color: rgba(0,0,0,.7);
+	}
+	&.active,&:hover{
+		background: $secondary;
+		border-left: none;
+		h3{
+			a{
+				color: $white;
+			}
+		}
+		.icon{
+			content: url(../../../assets/images/shop-icon-free-hover.png);
+		}
+		p{
+			color: rgba(255,255,255,.9);
+		}
+	}
+	&:hover{
+		background: $primary;
+	}
+}
+

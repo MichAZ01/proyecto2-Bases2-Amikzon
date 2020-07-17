@@ -1,0 +1,110 @@
+<div class="hero-wrap img" style="background-image: url(assets/images/bg_3.jpeg);">
+
+    <div class="container">
+        <!-- main -->
+        <div class="main-agileits">
+            <div class="mainw3-agileinfo form">
+                <div id="login">
+                    <div>
+                        <div align="center" class="field-wrap">
+                            <img src="../../../../assets/images/logoFondo.png">
+                        </div>
+                        <div class="field-wrap">
+                            <input maxlength="20" class="custom-input" id="campo-nombre" placeholder="Nombre *"
+                                type="text" required autocomplete="off" data-toggle="tooltip" data-placement="top"
+                                title="Digite su nombre" value="{{registroUsuariosService.nuevoUsuario.getNombre()}}"/>
+
+                            <div *ngIf="nombreVacio">
+                                <label class="custom-label text-warning">El nombre es obligatorio</label>
+                            </div>
+
+                        </div>
+                        <div class="field-wrap">
+                            <input class="custom-input" id="campo-apellido1" placeholder="Primer apellido *"
+                                maxlength="20" type="text" required autocomplete="off" data-toggle="tooltip"
+                                data-placement="top" title="Digite su primer apellido"
+                                value="{{registroUsuariosService.nuevoUsuario.getApellido1()}}"/>
+
+                            <div *ngIf="apellido1Vacio">
+                                <label class="custom-label text-warning">El primer apellido es obligatorio</label>
+                            </div>
+
+                        </div>
+                        <div class="field-wrap">
+                            <input class="custom-input" id="campo-apellido2" placeholder="Segundo apellido *"
+                                maxlength="20" type="text" required autocomplete="off" data-toggle="tooltip"
+                                data-placement="top" title="Digite su segundo apellido"
+                                value="{{registroUsuariosService.nuevoUsuario.getApellido2()}}"/>
+
+                            <div *ngIf="apellido2Vacio">
+                                <label class="custom-label text-warning">El segundo apellido es obligatorio</label>
+                            </div>
+
+                        </div>
+                        <div class="field-wrap">
+                            <label class="custom-label">Fecha de nacimiento *</label>
+                            <input id="campo-fecha-nacimiento" class="custom-input" type="date" required autocomplete="off"
+                            value="{{registroUsuariosService.nuevoUsuario.getFechaNacimiento()}}"/>
+
+                            <div *ngIf="fechaNacimientoVacia">
+                                <label class="custom-label text-warning">Debe ingresar su fecha de nacimiento</label>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <input id="campo-telefono1" placeholder="Teléfono primario *" maxlength="12"
+                                class="custom-input" type="text" required autocomplete="off"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                value="{{registroUsuariosService.nuevoUsuario.getTelefono1()}}"/>
+
+                            <div *ngIf="telefono1Vacio">
+                                <label class="custom-label text-warning">Debe ingresar su número de teléfono primario</label>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <input id="campo-telefono2" placeholder="Teléfono secundario" maxlength="12"
+                                class="custom-input" type="text" required autocomplete="off"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                value="{{registroUsuariosService.nuevoUsuario.getTelefono2()}}"/>
+                        </div>
+                        <div *ngIf="registroUsuariosService.nuevoUsuario.getTipoUsuario() != 'cliente'">
+                            <div class="field-wrap">
+                                <label class="custom-label">Sucursal a la que pertenece *</label>
+                                <div class="search-form mb-3">
+                                    <select (change)="obtenerSucursalSeleccionada('campo-sucursal')" [(ngModel)]="sucursalOpcion"
+                                    class="form-control" name="nombreSucursal" id="campo-sucursal"
+                                        form="Sucursalform">
+                                        <option value="Seleccione una sucursal">Seleccione una sucursal</option>
+                                        <option *ngFor="let sucursal of registroUsuariosService.sucursales"
+                                            value="{{sucursal}}">
+                                            {{sucursal}}</option>
+                                    </select>
+                                </div>
+
+                                <div *ngIf="!sucursalSeleccionadaCorrecta">
+                                    <label class="custom-label text-warning">Debe seleccionar una sucursal</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <div class="form-row">
+                                <div class="col">
+                                    <button class="button2 button-block" (click)="paginaAnterior()">Anterior</button>
+                                </div>
+                                <div class="col">
+                                    <div *ngIf="registroUsuariosService.nuevoUsuario.getTipoUsuario() != 'cliente'; else esCliente">
+                                        <button class="button button-block" (click)="obtenerCamposRegistro()">Registrarse</button>
+                                    </div>
+                                      
+                                      <ng-template #esCliente>
+                                        <button class="button button-block" (click)="obtenerCamposRegistro()">Siguiente</button>
+                                      </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- //main -->
+        </div>
+    </div>

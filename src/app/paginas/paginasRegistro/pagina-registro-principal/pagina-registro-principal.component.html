@@ -1,0 +1,159 @@
+<app-encabezado-pagina-registro></app-encabezado-pagina-registro>
+
+<div class="hero-wrap img" style="background-image: url(assets/images/bg_3.jpeg);">
+
+    <div class="container">
+        <!-- main -->
+        <div class="main-agileits">
+            <div class="mainw3-agileinfo form">
+                <div id="login">
+                    <div>
+                        <div align="center" class="field-wrap">
+                            <label class="custom-label" style="font-size: x-large;">Registro</label>
+                        </div>
+                        <div class="field-wrap">
+                            <input maxlength="10" class="custom-input" id="campo-nombreUsuario"
+                                placeholder="Digite un nombre de usuario *" type="text" required autocomplete="off"
+                                data-toggle="tooltip" data-placement="top" title="Digite un nombre de usuario"
+                                value="{{registroUsuariosService.nuevoUsuario.getNombreUsuario()}}"/>
+
+                            <div *ngIf="nombreDeUsuarioVacio">
+                                <label class="custom-label text-warning">Debe escribir un nombre de usuario</label>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <input class="custom-input" id="campo-contrasenia" placeholder="Digite una contraseña *"
+                                minlength="8" maxlength="20" type="password" required autocomplete="off"
+                                data-toggle="tooltip" data-placement="top" title="Digite una contraseña"
+                                value="{{registroUsuariosService.nuevoUsuario.getContrasenia()}}"/>
+
+                            <div *ngIf="contraseniaVacia">
+                                <label class="custom-label text-warning">Debe escribir una contraseña</label>
+                            </div>
+                            <div *ngIf="cantidadDigitosContraseniaCorrecto && !contraseniaAlfanumerica && !contraseniaVacia">
+                                <label class="custom-label text-warning">La contraseña debe tener letras (mínimo una mayúscula) y números</label>
+                            </div>
+                            <div *ngIf="!cantidadDigitosContraseniaCorrecto && !contraseniaVacia">
+                                <label class="custom-label text-warning">La contraseña debe tener mínimo 8 caracteres</label>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <input class="custom-input" id="campo-confirmacion-contrasenia" placeholder="Confirmar contraseña *"
+                                minlength="8" maxlength="20" type="password" required autocomplete="off"
+                                data-toggle="tooltip" data-placement="top" title="Confirmar contraseña"
+                                value="{{registroUsuariosService.nuevoUsuario.getContrasenia()}}"/>
+
+                            <div *ngIf="ConfirmacionContraseniaVacia">
+                                <label class="custom-label text-warning">Debe confirmar la contraseña</label>
+                            </div>
+                            <div *ngIf="!contraseniasCoinciden">
+                                <label class="custom-label text-warning">Las contraseñas no coinciden</label>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <label class="custom-label">Tipo de identificación *</label>
+                            <div class="search-form mb-3">
+                                <select (change)="obtenerTipoID('campo-tipoID')" class="form-control" name="tipoID"
+                                    id="campo-tipoID" form="tipoIDform" [(ngModel)]="selectUsuario">
+                                    <option value="Seleccione una opción">Seleccione una opción</option>
+                                    <option *ngFor="let tipo of registroUsuariosService.tiposID" value="{{tipo}}">
+                                        {{tipo}}</option>
+                                </select>
+                                <div *ngIf="!tipoIDEsCorrecto">
+                                    <label class="custom-label text-warning">Debe seleccionar un tipo de
+                                        identificación</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <div [ngSwitch]="tipoIDSeleccionada">
+                                <div class="field-wrap" *ngSwitchCase="'Física'">
+                                    <input class="custom-input" id="campo-identificacion" size="9" maxlength="9"
+                                        placeholder="Identificación *" type="text" required data-toggle="tooltip"
+                                        data-placement="top" title="Digite su número de identificación"
+                                        autocomplete="off"
+                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' 
+                                        value="{{registroUsuariosService.nuevoUsuario.getID()}}"/>
+
+                                    <div *ngIf="identificacionVacia">
+                                        <label class="custom-label text-warning">Debe escribir su número de
+                                            identificación</label>
+                                    </div>
+                                    <div *ngIf="!identificacionVacia && !cantidaDigitosIDCorrecto">
+                                        <label class="custom-label text-warning">Su identificación debe ser de {{cantidadDigitosID}} dígitos</label>
+                                    </div>
+                                </div>
+                                <div class="field-wrap" *ngSwitchCase="'Jurídica'">
+                                    <input class="custom-input" id="campo-identificacion" size="10" maxlength="10"
+                                        placeholder="Identificación *" type="text" required data-toggle="tooltip"
+                                        data-placement="top" title="Digite su número de identificación"
+                                        autocomplete="off"
+                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                        value="{{registroUsuariosService.nuevoUsuario.getID()}}" />
+
+                                    <div *ngIf="identificacionVacia">
+                                        <label class="custom-label text-warning">Debe escribir su número de
+                                            identificación</label>
+                                    </div>
+                                    <div *ngIf="!identificacionVacia && !cantidaDigitosIDCorrecto">
+                                        <label class="custom-label text-warning">Su identificación debe ser de {{cantidadDigitosID}} dígitos</label>
+                                    </div>
+                                </div>
+                                <div class="field-wrap" *ngSwitchCase="'DIMEX'">
+                                    <input class="custom-input" id="campo-identificacion" size="12" maxlength="12"
+                                        placeholder="Identificación *" type="text" required data-toggle="tooltip"
+                                        data-placement="top" title="Digite su número de identificación"
+                                        autocomplete="off"
+                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' 
+                                        value="{{registroUsuariosService.nuevoUsuario.getID()}}"/>
+
+                                    <div *ngIf="identificacionVacia">
+                                        <label class="custom-label text-warning">Debe escribir su número de
+                                            identificación</label>
+                                    </div>
+                                    <div *ngIf="!identificacionVacia && !cantidaDigitosIDCorrecto">
+                                        <label class="custom-label text-warning">Su identificación debe ser de {{cantidadDigitosID}} dígitos</label>
+                                    </div>
+                                </div>
+                                <div class="field-wrap" *ngSwitchDefault>
+                                    <input class="custom-input" disabled id="campo-identificacion"
+                                        placeholder="Identificación *" type="text" required data-toggle="tooltip"
+                                        data-placement="top" title="Debe seleccionar un tipo de identificación"
+                                        autocomplete="off"
+                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <label class="custom-label">Seleccione el tipo de usuario *</label>
+
+                            <div  class="radio">
+                                <div id="radio-group" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary">
+                                        <input value="cliente" type="radio" name="button" id="button1" autocomplete="off"
+                                            checked>Cliente
+                                    </label>
+
+                                    <label class="btn btn-primary active">
+                                        <input value="vendedor" type="radio" name="button" id="button2" autocomplete="off">Vendedor
+                                    </label>
+
+                                    <label class="btn btn-primary">
+                                        <input value="corporativo" type="radio" name="button" id="button3" autocomplete="off">
+                                        Corporativo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="button button-block" (click)="obtenerCamposRegistro()">Siguiente</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- //main -->
+    </div>
+</div>

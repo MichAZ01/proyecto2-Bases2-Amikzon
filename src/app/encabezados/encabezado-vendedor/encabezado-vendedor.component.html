@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container-fluid px-md-4	">
+        <a class="navbar-brand"><img class="img-change" src="../../../assets/images/logo.png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false">Mis opciones</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" routerLink="buscar-productos-vendedor" >Buscar Productos</a>
+                        <a class="dropdown-item" routerLink="" >Comprar productos</a>
+                        <a class="dropdown-item" routerLink="" >Facturar</a>
+                        <a class="dropdown-item" routerLink="" >Reportes</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false">Módulos</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item">Proveedores</a>
+                        <a class="dropdown-item" routerLink="" >Clientes</a>
+                        <a class="dropdown-item" routerLink="" >Categorías</a>
+                        <a class="dropdown-item" routerLink="" >Productos</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="true"><!--{{usuarioActual.getNombreUsuario()}}-->nombreUsuario</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" routerLink="perfil-vendedor-informacionPersonal" >Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" (click)="inicioSesionService.cerrarSesion()" routerLink="">Cerrar sesión</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
