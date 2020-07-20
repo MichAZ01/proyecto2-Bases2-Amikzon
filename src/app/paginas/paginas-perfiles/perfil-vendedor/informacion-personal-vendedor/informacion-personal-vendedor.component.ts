@@ -9,7 +9,6 @@ import { Vendedor } from '../../../../_modelos/vendedor.model';
   styleUrls: ['./informacion-personal-vendedor.component.scss']
 })
 export class InformacionPersonalVendedorComponent implements OnInit {
-  mapUrl: string = "";
   usuarioActual:Vendedor = <Vendedor> this.inicioSesionService.usuarioActual;
 
   constructor(public inicioSesionService: InicioSesionUsuariosService, private router: Router, public route: ActivatedRoute) { 
@@ -20,9 +19,7 @@ export class InformacionPersonalVendedorComponent implements OnInit {
     
   }
 
-  getDigitoRandom() {
-    return Math.random() * (100 - 1) + 1;
-  }
+  
 
   
 

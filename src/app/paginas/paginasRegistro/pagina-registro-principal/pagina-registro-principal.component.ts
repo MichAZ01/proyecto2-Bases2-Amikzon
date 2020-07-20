@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistroUsuariosService } from '../../../_services/registro-service/registro-usuarios.service'
 import { Router, ActivatedRoute } from '@angular/router';
+import { Apollo } from 'apollo-angular';
+import { verificarUsuarioExiste } from '../../../graphql/queries/queries/queries.module';
+import { UsuarioEncontrado } from '../../../graphql/types/types/types.module';
+
+
 
 @Component({
   selector: 'app-pagina-registro-principal',
@@ -21,9 +26,11 @@ export class PaginaRegistroPrincipalComponent implements OnInit {
   cantidaDigitosIDCorrecto: Boolean = true;
   link: String = "registro-informacion-personal"
   selectUsuario: String = "";
+  seEncontroExistenciaUsuario: Boolean = false;
+  buscandoExistencia: boolean = false;
 
   constructor(public registroUsuariosService: RegistroUsuariosService,
-    private router: Router, public route: ActivatedRoute) {
+    private router: Router, public route: ActivatedRoute, private apollo: Apollo) {
       
   }
 
@@ -102,32 +109,57 @@ export class PaginaRegistroPrincipalComponent implements OnInit {
   }
 
   obtenerCamposRegistro() {
-    var nombreUsuario = (<HTMLSelectElement>document.getElementById("campo-nombreUsuario")).value;
+    var _nombreUsuario = (<HTMLSelectElement>document.getElementById("campo-nombreUsuario")).value;
     var contrasenia = (<HTMLSelectElement>document.getElementById("campo-contrasenia")).value;
     var confirmacionContrasenia = (<HTMLSelectElement>document.getElementById("campo-confirmacion-contrasenia")).value;
-    var identificacion = (<HTMLSelectElement>document.getElementById("campo-identificacion")).value;
+    var _identificacion = (<HTMLSelectElement>document.getElementById("campo-identificacion")).value;
     var etiquetaOpcionUsuario = <HTMLSelectElement>document.getElementById('radio-group').getElementsByClassName('active');
     var tipoUsuario = etiquetaOpcionUsuario[0].getElementsByTagName("input")[0].value;
-    this.validarCamposRegistro(nombreUsuario, contrasenia, identificacion, confirmacionContrasenia);
+    this.validarCamposRegistro(_nombreUsuario, contrasenia, _identificacion, confirmacionContrasenia);
     this.validarLargoContrasenia(contrasenia);
     this.validarTipoContrasenia(contrasenia);
-    this.validarLargoID(identificacion);
+    this.validarLargoID(_identificacion);
     this.validarCoincidenciaContrasenias(contrasenia, confirmacionContrasenia);
+    
     if (this.tipoIDEsCorrecto && !this.nombreDeUsuarioVacio && !this.contraseniaVacia && this.cantidadDigitosContraseniaCorrecto
       && this.contraseniaAlfanumerica && !this.identificacionVacia && this.cantidaDigitosIDCorrecto &&
       !this.ConfirmacionContraseniaVacia && this.contraseniasCoinciden  ) {
-
-      if(this.registroUsuariosService.nuevoUsuario.getTipoUsuario() == ""){
-        this.registroUsuariosService.guardarNuevoUsuario(nombreUsuario, contrasenia, this.tipoIDSeleccionada, identificacion, tipoUsuario);
-      }
-      else{
-        this.registroUsuariosService.nuevoUsuario.modificarInformacion(nombreUsuario, contrasenia, this.tipoIDSeleccionada, identificacion, tipoUsuario);
-      }
-
-      this.router.navigate([this.link]);
+        
+        this.validarExistenciaUsuario(_nombreUsuario, contrasenia, _identificacion, tipoUsuario);
       
     }
 
+  }
+
+
+  validarExistenciaUsuario(_nombreUsuario: String, contrasenia: String, _identificacion: String, tipoUsuario: String){
+    this.buscandoExistencia = true;
+
+    this.apollo.query({
+      query: verificarUsuarioExiste,
+      variables: {
+        identificacion: _identificacion,
+        nombreUsuario: _nombreUsuario
+      }
+    }).subscribe(result => {
+      var resultado = result.data['verificarUsuarioExiste'] as UsuarioEncontrado[];
+        if(resultado.length == 0 ) {
+          
+          if(this.registroUsuariosService.nuevoUsuario.getTipoUsuario() == ""){
+            this.registroUsuariosService.guardarNuevoUsuario(_nombreUsuario, contrasenia, this.tipoIDSeleccionada, _identificacion, tipoUsuario);
+          }
+          else{
+            this.registroUsuariosService.nuevoUsuario.modificarInformacion(_nombreUsuario, contrasenia, this.tipoIDSeleccionada, _identificacion, tipoUsuario);
+          }
+          this.seEncontroExistenciaUsuario = false;
+          this.buscandoExistencia = false;
+          this.router.navigate([this.link]);
+        }
+        else{
+          this.seEncontroExistenciaUsuario = true;
+          this.buscandoExistencia = false;
+        }
+    });
   }
 
 

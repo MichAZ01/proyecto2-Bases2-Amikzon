@@ -3,6 +3,10 @@ import { RegistroUsuariosService } from '../../../_services/registro-service/reg
 import { Router, ActivatedRoute } from '@angular/router';
 import { InicioSesionUsuariosService } from '../../../_services/inicio-sesion-service/inicio-sesion-usuarios.service';
 import {Vendedor} from '../../../_modelos/vendedor.model'
+import { agregarVendedor } from '../../../graphql/mutations/mutations/mutations.module';
+import { Resultado } from '../../../graphql/types/types/types.module';
+import { Apollo } from 'apollo-angular';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pagina-registro-informacion-personal',
@@ -21,9 +25,11 @@ export class PaginaRegistroInformacionPersonalComponent implements OnInit {
   sucursalSeleccionada:String = "";
   sucursalOpcion:String = "";
   defaultOpcion:String = "Seleccione una sucursal";
+  errorAlAgregarUsuario: Boolean = false;
+  agregandoUsuario: Boolean = false;
 
   constructor(public registroUsuariosService: RegistroUsuariosService, public inicioSesionService: InicioSesionUsuariosService,
-    private router: Router, public route: ActivatedRoute) {
+    private router: Router, public route: ActivatedRoute, private apollo: Apollo, public datepipe: DatePipe) {
       
      }
 
@@ -79,25 +85,67 @@ export class PaginaRegistroInformacionPersonalComponent implements OnInit {
     var apellido1 = (<HTMLSelectElement>document.getElementById("campo-apellido1")).value;
     var apellido2 = (<HTMLSelectElement>document.getElementById("campo-apellido2")).value;
     var fechaNacimiento = (<HTMLSelectElement>document.getElementById("campo-fecha-nacimiento")).value;
+    var fechaNacimientoFormat = this.datepipe.transform(fechaNacimiento, 'yyyy-MM-dd');
     var telefono1 = (<HTMLSelectElement>document.getElementById("campo-telefono1")).value;
     var telefono2 = (<HTMLSelectElement>document.getElementById("campo-telefono2")).value;
-    this.validarCamposRegistroInformacion(nombre, apellido1, apellido2, fechaNacimiento, telefono1);
+    if(telefono2 == "") telefono2 = "N/A";
+    this.validarCamposRegistroInformacion(nombre, apellido1, apellido2, fechaNacimientoFormat, telefono1);
 
     if(!this.nombreVacio && !this.apellido1Vacio && !this.apellido2Vacio && !this.fechaNacimientoVacia &&
       !this.telefono1Vacio && this.sucursalSeleccionadaCorrecta){
         this.registroUsuariosService.guardarInformacionPersonalUsuario(nombre, apellido1, apellido2,
-          fechaNacimiento, telefono1, telefono2, this.sucursalSeleccionada);
+          fechaNacimientoFormat, telefono1, telefono2, this.sucursalSeleccionada);
+
+          if(this.sucursalSeleccionada.localeCompare("San José") == 0) this.sucursalSeleccionada = "San Jose";
 
           var tipoUsuarioActual = this.registroUsuariosService.nuevoUsuario.getTipoUsuario().toString();
           if( tipoUsuarioActual == "vendedor" || tipoUsuarioActual == "corporativo"){
-            //Incluir instrucción para almacenar en la base de datos
-            this.inicioSesionService.usuarioActual = this.registroUsuariosService.nuevoUsuario;
+            
+            this.guardarNuevoCliente(nombre, apellido1, apellido2, fechaNacimientoFormat, telefono1, telefono2, this.sucursalSeleccionada);
+            
           }
-
-          this.redireccionarSegunTipoUsuario();
+          else{
+            this.redireccionarSegunTipoUsuario();
+          }
       }
 
   }
+
+  guardarNuevoCliente(_nombre: String, _apellido1: String, _apellido2: String, _fechaNacimientoFormat: String, _telefono1: String,
+     _telefono2: String, _sucursalSeleccionada: String){
+      this.agregandoUsuario = true;
+      var vendedor = (<Vendedor> this.registroUsuariosService.nuevoUsuario);
+      this.apollo.mutate({
+        mutation: agregarVendedor,
+        variables: {
+          identificacion: vendedor.getID(), 
+          tipoID: vendedor.getTipoID(), 
+          nombre: _nombre, 
+          apellido1: _apellido1, 
+          apellido2: _apellido2,
+          fechaNacimiento: _fechaNacimientoFormat, 
+          telefono1: _telefono1, 
+          telefono2: _telefono2, 
+          nombreSucursal: _sucursalSeleccionada,
+          nombreUsuario: vendedor.getNombreUsuario(), 
+          contrasenia: vendedor.getContrasenia(), 
+          tipoUsuario: vendedor.getTipoUsuario()
+        }
+      }).subscribe(result => {
+        var resultado = result.data['agregarVendedor'] as string;
+        if(resultado == "Ha ocurrido un error al crear un empleado") {
+          this.agregandoUsuario = false;
+          this.errorAlAgregarUsuario = true;
+        } else {
+          this.inicioSesionService.usuarioActual = this.registroUsuariosService.nuevoUsuario;
+          this.agregandoUsuario = false;
+          this.errorAlAgregarUsuario = false;
+          this.redireccionarSegunTipoUsuario();
+        }
+      });
+       
+  }
+
 
   redireccionarSegunTipoUsuario(){
     var ruta:String = "";

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Cliente} from '../../../_modelos/cliente.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { RegistroUsuariosService } from '../../../_services/registro-service/registro-usuarios.service'
 
 @Component({
   selector: 'app-cliente-registro-direccion',
@@ -11,7 +14,11 @@ export class ClienteRegistroDireccionComponent implements OnInit {
   zoom:number;
   mapUrl: string = "";
   coordenadasObtenidas: Boolean = false;
-  constructor() { }
+  direccionExactaVacia: Boolean = false;
+  link: String = "perfil-cliente-informacionPersonal";
+
+  constructor(public registroUsuariosService: RegistroUsuariosService,
+    private router: Router, public route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -30,6 +37,25 @@ export class ClienteRegistroDireccionComponent implements OnInit {
         this.coordenadasObtenidas = true;
         console.log(this.mapUrl);
       });
+    }
+    else{
+      this.coordenadasObtenidas = false;
+    }
+  }
+
+  validarCampoDireccion(direccionExacta:String){
+    this.direccionExactaVacia = (direccionExacta == "") ? true : false;
+
+    this.coordenadasObtenidas = (this.latitude != undefined && this.longitude != undefined) ? true : false;
+  }
+
+  obtenerCamposRegistro() {
+    var direccionExacta = (<HTMLSelectElement>document.getElementById("campo-direccion-exacta")).value;
+
+    this.validarCampoDireccion(direccionExacta);
+
+    if(!this.direccionExactaVacia && this.coordenadasObtenidas){
+      this.router.navigate([this.link]);
     }
   }
 

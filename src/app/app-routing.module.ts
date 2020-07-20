@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PaginaPrincipalComponent } from './paginas/pagina-principal/pagina-principal.component';
 import { PaginaIniciarSesionComponent } from './paginas/pagina-iniciar-sesion/pagina-iniciar-sesion.component';
-import  { PaginaRegistroPrincipalComponent } from './paginas/paginasRegistro/pagina-registro-principal/pagina-registro-principal.component'
+import { PaginaRegistroPrincipalComponent } from './paginas/paginasRegistro/pagina-registro-principal/pagina-registro-principal.component'
 import { PaginaRegistroInformacionPersonalComponent } from './paginas/paginasRegistro/pagina-registro-informacion-personal/pagina-registro-informacion-personal.component';
 import { InformacionPersonalClienteComponent } from './paginas/paginas-perfiles/perfil-cliente/informacion-personal-cliente/informacion-personal-cliente.component';
 import { InformacionPersonalVendedorComponent } from './paginas/paginas-perfiles/perfil-vendedor/informacion-personal-vendedor/informacion-personal-vendedor.component';

@@ -16,7 +16,7 @@
                                 <select 
                                 class="form-control" name="provincia" id="campo-provincia"
                                     form="Provinciaform"> <!--(change)="obtenerSucursalSeleccionada('campo-sucursal')" -->
-                                    <option value="">Seleccione una provincia</option>
+                                    <option value="">provincia</option>
                                     <!--<option *ngFor="let sucursal of registroUsuariosService.sucursales"
                                         value="{{sucursal}}">
                                         {{sucursal}}</option>-->
@@ -28,7 +28,7 @@
                                 <select 
                                 class="form-control" name="canton" id="campo-canton"
                                     form="Cantonform"> <!--(change)="obtenerSucursalSeleccionada('campo-sucursal')" -->
-                                    <option value="">Seleccione un cantón</option>
+                                    <option value="">cantón</option>
                                     <!--<option *ngFor="let sucursal of registroUsuariosService.sucursales"
                                         value="{{sucursal}}">
                                         {{sucursal}}</option>-->
@@ -40,14 +40,24 @@
                                 <select 
                                 class="form-control" name="distrito" id="campo-distrito"
                                     form="Distritoform"> <!--(change)="obtenerSucursalSeleccionada('campo-sucursal')" -->
-                                    <option value="">Seleccione un distrito</option>
+                                    <option value="">distrito</option>
                                     <!--<option *ngFor="let sucursal of registroUsuariosService.sucursales"
                                         value="{{sucursal}}">
                                         {{sucursal}}</option>-->
                                 </select>
                             </div>
                         </div>
-                        <div class="field-wrap" style="background: white;">
+                        <div class="field-wrap">
+                            <div class="form-group">
+                                <label class="custom-label">Dirección Exacta</label>
+                                <textarea style="color: black !important;" class="form-control" rows="5" id="campo-direccion-exacta"></textarea>
+                              </div>
+
+                              <div *ngIf="direccionExactaVacia">
+                                <label class="custom-label text-warning">Debe escribir su dirección exacta</label>
+                            </div>
+                        </div>
+                        <div class="field-wrap" style="background: rgb(198, 241, 236);">
                             <label align="center" *ngIf="!coordenadasObtenidas" class="custom-label" style="color: blue !important; top:60%; margin-top:-52px; left: 15%; margin-left:-52px;
                             position:absolute;  line-height:2em;">
                                 Para poder obtener sus coordenadas
@@ -58,7 +68,17 @@
                                 <iframe class="col-lg-12" [attr.src]="mapUrl | safe" width="100%" height="100%" frameborder="0" style="border:0" ></iframe>
                             </div>
                         </div>
-                        <div class="button button-block">Ingresar</div>
+                        <div class="field-wrap">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <label class="custom-label" style="color: black !important;">Latitud: {{latitude}} </label>
+                                </div>
+                                <div class="form-row">
+                                    <label class="custom-label" style="color: black !important;">Longitud: {{longitude}} </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button button-block" (click)="obtenerCamposRegistro()">Ingresar</div>
                     </form>
                 </div>
 

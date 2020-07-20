@@ -1,0 +1,136 @@
+<app-encabezado-principal></app-encabezado-principal>
+
+<div class="hero-wrap hero-wrap-2" style="background-image: url('assets/images/bg_3.jpeg');"
+	data-stellar-background-ratio="0.5">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row no-gutters slider-text align-items-end justify-content-start">
+			<div class="col-md-12 ftco-animate text-center mb-5">	
+				<h1 class="mb-3 bread">Compra tus productos aquí</h1>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section class="ftco-section bg-light" style="padding-top: 0%; padding-bottom: 0%; background-color: #ecf8f8 !important;">
+	<div class="container">
+		<div class="row">
+			<form class="search-form mb-3 col-lg-9 pr-lg-4">
+				<div class="form-group" style="align-content: center;">
+					<div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+						<button id="sortAsc" (click)="sortAscending()" class="btn btn-primary py-2"
+							[disabled]="isDisabledAsc"
+							style="background-color: #fd7e14; border: 1px solid #fd7e14; cursor: pointer; margin-right: 1%;">
+							Ordenar ascendente</button>
+						<button id="sortDesc" (click)="sortDescending()" class="btn btn-primary py-2"
+							[disabled]="isDisabledDesc"
+							style="background-color: #fd7e14; border: 1px solid #fd7e14; cursor: pointer; margin-right: 1%;">
+							Ordenar descendente</button>
+							<button class="btn btn-primary py-2"
+							style="cursor: pointer;">
+							Ver todo el catálogo</button> <!--(click)="replaceCustomers()"-->
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 pr-lg-4">
+				<div class="row align-items-center">
+					<div class="col-md-12 ftco-animate"
+						*ngFor="let producto of productosService.productos | orderBy:predicate:reverse:true | paginate: config; let i = index; ">
+						<div class="job-post-item p-4 d-block d-lg-flex align-items-center">
+							<div class="one-third mb-4 mb-md-0">
+								<div class="job-post-item-header d-block d-md-flex d-flex">
+									<img src="../../../../../assets/images/product-icon.png"
+										style="border-radius: 10px; margin-right: 4px;" alt="icono de producto" />
+									<h4 class="text-black">{{producto.nombreProducto}}</h4>
+								</div>
+								<div class="job-post-item-body d-block d-md-flex">
+									<div><span class="icon-tags" style="margin-right: 2px;"></span> <span>Categoría:
+										</span><span>{{producto.nombreCategoria}}</span>
+									</div>
+								</div>
+								<div class="job-post-item-body d-block d-md-flex">
+									<div><span class="icon-map-marker" style="margin-right: 2px;"></span>
+										<span>Precio: </span><span>{{producto.precio}}</span></div>
+								</div>
+							</div>
+
+							<div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+								<div (click)="verProducto((config.currentPage - 1) * config.itemsPerPage + i)"
+									class="btn btn-primary py-2" style="cursor: pointer;">ver producto</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 ftco-animate">
+						<div class="row mt-5" style="margin-bottom: 15px;">
+							<div class="col text-center">
+								<div class="block-27">
+									<pagination-template id="pagination" #p="paginationApi" [id]="config.id"
+										(pageChange)="config.currentPage = $event">
+										<div class="custom-pagination">
+											<div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+												<span *ngIf="!p.isFirstPage()" (click)="p.previous()">
+													< </span>
+											</div>
+											<div class="page-number" *ngFor="let page of p.pages"
+												[class.current]="p.getCurrent() === page.value">
+												<span (click)="p.setCurrent(page.value)"
+													*ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+												<div *ngIf="p.getCurrent() === page.value">
+													<span>{{ page.label }}</span>
+												</div>
+											</div>
+											<div class="pagination-next" [class.disabled]="p.isLastPage()">
+												<span *ngIf="!p.isLastPage()" (click)="p.next()"> > </span>
+											</div>
+										</div>
+
+									</pagination-template>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div *ngIf="productosService.productosInventario.length === 0">
+					<div id="ftco-loader" class="show"><svg class="circular" width="48px" height="48px">
+							<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+								stroke="#eeeeee" />
+							<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+								stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+				</div>
+
+			</div>
+			<div class="col-lg-3 sidebar">
+				<div class="sidebar-box bg-white p-4 ftco-animate">
+					<h3 class="heading-sidebar">Nombre del Proveedor</h3>
+					<form action="#" class="search-form mb-3">
+						<div class="form-group">
+							<input id="campo-nombre-proveedor" type="text" class="form-control"
+								placeholder="Escriba un nombre">
+						</div>
+					</form>
+					<h3 class="heading-sidebar">Categoría del producto</h3>
+					<form action="#" class="search-form mb-3">
+						<div class="form-group">
+							<input id="campo-categoria-producto" type="text" class="form-control"
+								placeholder="Escriba una categoría">
+						</div>
+					</form>
+					<form class="search-form mb-3">
+						<div class="form-group" style="align-content: center;">
+							<div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+								<div (click)="buscarProductosInventario()" class="btn btn-primary py-2"
+									style="background-color: #fd7e14; border: 1px solid #fd7e14; cursor: pointer;">
+									Buscar productos</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

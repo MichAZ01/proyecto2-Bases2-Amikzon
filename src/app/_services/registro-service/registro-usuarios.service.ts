@@ -3,6 +3,13 @@ import { Usuario } from '../../_modelos/usuario.model';
 import { Cliente } from '../../_modelos/cliente.model';
 import { Vendedor } from '../../_modelos/vendedor.model';
 import { Corporativo } from '../../_modelos/corporativo.model';
+import { Apollo } from 'apollo-angular';
+import { verificarUsuarioExiste } from '../../graphql/queries/queries/queries.module';
+import { UsuarioEncontrado } from '../../graphql/types/types/types.module';
+import { getDirecciones } from '../../graphql/queries/queries/queries.module';
+import { Provincia } from '../../graphql/types/types/types.module';
+import { Canton } from '../../graphql/types/types/types.module';
+import { Distrito } from '../../graphql/types/types/types.module';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +22,9 @@ export class RegistroUsuariosService {
   public nuevoUsuario:Usuario = new Usuario("", "", "", "", "");
   public defaultOpcion:String = "Seleccione una opción";
   public defaultOpcionSucursal:String = "Seleccione una sucursal";
+  public Provincias: Provincia[] = [];
 
-  constructor() { 
+  constructor(private apollo: Apollo) { 
     this.tiposID.push("Física");
     this.tiposID.push("Jurídica");
     this.tiposID.push("DIMEX");
@@ -90,6 +98,16 @@ export class RegistroUsuariosService {
         break;
     } 
   }
+
+  obtenerProvincias() {
+    this.apollo.query({
+      query: getDirecciones
+    }).subscribe(result => {
+      this.Provincias = result.data['getDirecciones'] as Provincia[];
+    });
+  }
+
+
 
 
 }

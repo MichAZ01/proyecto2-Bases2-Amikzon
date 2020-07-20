@@ -1,7 +1,7 @@
 <app-encabezado-inicio-sesion></app-encabezado-inicio-sesion>
 
 <div class="hero-wrap img" style="background-image: url(assets/images/bg_3.jpeg);">
- 
+
     <div class="container">
         <!-- main -->
         <div class="main-agileits">
@@ -9,22 +9,38 @@
                 <div id="login">
                     <form>
                         <div class="field-wrap">
-                            <input id="campoNombreUsuario" placeholder="Nombre de usuario" type="text" required autocomplete="off" 
-                            data-toggle="tooltip" data-placement="top" title="Digite su nombre de usuario"/>
+                            <input id="campoNombreUsuario" placeholder="Nombre de usuario" type="text" required
+                                autocomplete="off" data-toggle="tooltip" data-placement="top"
+                                title="Digite su nombre de usuario" />
 
-                            <div *ngIf = "nombreDeUsuarioVacio">
+                            <div *ngIf="nombreDeUsuarioVacio">
                                 <label class="text-warning">Debe escribir un nombre de usuario</label>
                             </div>
                         </div>
                         <div class="field-wrap">
-                            <input id="campoContrasenia" placeholder="Contraseña" type="password" required autocomplete="off" 
-                            data-toggle="tooltip" data-placement="top" title="Digite su contraseña"/>
+                            <input id="campoContrasenia" placeholder="Contraseña" type="password" required
+                                autocomplete="off" data-toggle="tooltip" data-placement="top"
+                                title="Digite su contraseña" />
 
-                            <div *ngIf = "contraseniaVacia">
+                            <div *ngIf="contraseniaVacia">
                                 <label class="text-warning">Debe escribir una contraseña</label>
                             </div>
                         </div>
-                        <div class="button button-block" (click) = "ObtenerCamposInicioSesion()">Ingresar</div>
+                        <div class="field-wrap">
+                            <div *ngIf="!usuarioRegistrado">
+                                <label align="center" class="text-warning">
+                                    Error: Nombre de usuario o contraseña incorrecta.
+                                </label>
+                            </div>
+                            <div align="center" *ngIf="verificandoUsuario" width="48px" height="48px">
+                                <div id="ftco-loader" class="show"><svg class="circular" width="48px" height="48px">
+                                        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+                                            stroke="#eeeeee" />
+                                        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+                                            stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+                            </div>
+                        </div>
+                        <div class="button button-block" (click)="ObtenerCamposInicioSesion()">Ingresar</div>
                     </form>
                 </div>
 

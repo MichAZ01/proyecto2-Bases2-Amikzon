@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GraphqlModule } from './graphql/graphql.module';
+import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+
 import { SafePipe } from './safe.pipe';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -12,6 +13,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {GoogleMapsModule} from '@angular/google-maps'; 
 
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { EncabezadoPrincipalComponent } from './encabezados/encabezado-principal/encabezado-principal.component';
 import { PaginaPrincipalComponent } from './paginas/pagina-principal/pagina-principal.component';
@@ -30,6 +32,10 @@ import { EncabezadoVendedorComponent } from './encabezados/encabezado-vendedor/e
 import { EncabezadoClienteComponent } from './encabezados/encabezado-cliente/encabezado-cliente.component';
 import { EncabezadoCorporativoComponent } from './encabezados/encabezado-corporativo/encabezado-corporativo.component';
 import { BuscarProductosComponent } from './paginas/paginas-perfiles/perfil-vendedor/buscar-productos/buscar-productos.component';
+import { PaginaProductosVisitanteComponent } from './paginas/pagina-productos-visitante/pagina-productos-visitante.component';
+import { BuscarProductosClienteComponent } from './pages/perfil-cliente-/buscar-productos-cliente/buscar-productos-cliente.component';
+import { EncabezadoClienteProductosComponent } from './encabezados/encabezado-cliente-productos/encabezado-cliente-productos.component';
+import { FacturarProductosClienteComponent } from './pages/perfil-vendedor-/facturar-productos-cliente/facturar-productos-cliente.component';
 
 @NgModule({
   declarations: [
@@ -52,18 +58,22 @@ import { BuscarProductosComponent } from './paginas/paginas-perfiles/perfil-vend
     EncabezadoCorporativoComponent,
     SafePipe,
     BuscarProductosComponent,
+    PaginaProductosVisitanteComponent,
+    BuscarProductosClienteComponent,
+    EncabezadoClienteProductosComponent,
+    FacturarProductosClienteComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    GraphqlModule,
     HttpClientModule,
     OrderModule,
     NgxPaginationModule,
     GoogleMapsModule,
-    FormsModule
+    FormsModule,
+    GraphQLModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

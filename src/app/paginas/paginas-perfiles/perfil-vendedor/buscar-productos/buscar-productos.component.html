@@ -27,8 +27,8 @@
 							style="background-color: #fd7e14; border: 1px solid #fd7e14; cursor: pointer; margin-right: 1%;">
 							Ordenar descendente</button>
 							<button class="btn btn-primary py-2"
-							style="cursor: pointer;">
-							Ver todo el catálogo</button> <!--(click)="replaceCustomers()"-->
+							style="cursor: pointer;" (click)="verTodos()">
+							Ver todo el catálogo</button> 
 					</div>
 				</div>
 			</form>
@@ -45,22 +45,27 @@
 								<div class="job-post-item-header d-block d-md-flex d-flex">
 									<img src="../../../../../assets/images/product-icon.png"
 										style="border-radius: 10px; margin-right: 4px;" alt="icono de producto" />
-									<h4 class="text-black"><!--{{replaceCharacters(customer.CustomerName)}}--></h4>
+									<h4 class="text-black">{{producto.nombreProducto}}</h4>
 								</div>
 								<div class="job-post-item-body d-block d-md-flex">
 									<div><span class="icon-tags" style="margin-right: 2px;"></span> <span>Categoría:
-										</span><span><!--{{customer.CostumerCategory}}--></span>
+										</span><span>{{producto.nombreCategoria}}</span>
 									</div>
 								</div>
 								<div class="job-post-item-body d-block d-md-flex">
 									<div><span class="icon-map-marker" style="margin-right: 2px;"></span>
-										<span>Precio: </span><span><!--{{customer.Ubication}}--></span></div>
+										<span>Precio: </span><span>{{producto.precio}}</span></div>
 								</div>
 							</div>
 
 							<div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
 								<div (click)="verProducto((config.currentPage - 1) * config.itemsPerPage + i)"
-									class="btn btn-primary py-2" style="cursor: pointer;">View Customer</div>
+									class="btn btn-primary py-2" style="cursor: pointer;">ver producto</div>
+							</div>
+							<div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+								<div (click)="verProducto((config.currentPage - 1) * config.itemsPerPage + i)"
+									class="btn btn-primary py-2" 
+									style="background-color: #fd7e14; border: 1px solid #fd7e14; cursor: pointer;">Agregar</div>
 							</div>
 						</div>
 					</div>
@@ -95,21 +100,21 @@
 					</div>
 				</div>
 
-				<!--<div *ngIf="!mainservice.customers || mainservice.customers.length === 0">
+				<div *ngIf="productosService.productos.length === 0">
 					<div id="ftco-loader" class="show"><svg class="circular" width="48px" height="48px">
 							<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4"
 								stroke="#eeeeee" />
 							<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
 								stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
-				</div>-->
+				</div>
 
 			</div>
 			<div class="col-lg-3 sidebar">
 				<div class="sidebar-box bg-white p-4 ftco-animate">
-					<h3 class="heading-sidebar">Nombre del producto</h3>
+					<h3 class="heading-sidebar">Nombre del Proveedor</h3>
 					<form action="#" class="search-form mb-3">
 						<div class="form-group">
-							<input id="campo-nombre-producto" type="text" class="form-control"
+							<input id="campo-nombre-proveedor" type="text" class="form-control"
 								placeholder="Escriba un nombre">
 						</div>
 					</form>
@@ -120,26 +125,12 @@
 								placeholder="Escriba una categoría">
 						</div>
 					</form>
-					<h3 class="heading-sidebar">Precio mínimo</h3>
-					<form action="#" class="search-form mb-3">
-						<div class="form-group">
-							<input id="campo-precio-minimo" type="number" class="form-control"
-								placeholder="Mínimo">
-						</div>
-                    </form>
-                    <h3 class="heading-sidebar">Precio máximo</h3>
-					<form action="#" class="search-form mb-3">
-						<div class="form-group">
-							<input id="campo-precio-maximo" type="number" class="form-control"
-								placeholder="Máximo">
-						</div>
-					</form>
 					<form class="search-form mb-3">
 						<div class="form-group" style="align-content: center;">
 							<div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
 								<div (click)="buscarProductos()" class="btn btn-primary py-2"
 									style="background-color: #fd7e14; border: 1px solid #fd7e14; cursor: pointer;">
-									Search customers</div>
+									Buscar productos</div>
 							</div>
 						</div>
 					</form>

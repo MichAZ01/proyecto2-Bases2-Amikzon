@@ -15,4 +15,8 @@ export class EncabezadoVendedorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  cerrarSesion(){
+    this.inicioSesionService.cerrarSesion();
+  }
+
 }
