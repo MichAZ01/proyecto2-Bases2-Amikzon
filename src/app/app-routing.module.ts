@@ -10,6 +10,8 @@ import { InformacionPersonalCorporativoComponent } from './paginas/paginas-perfi
 import { ClienteRegistroDireccionComponent } from './paginas/PaginasRegistro/cliente-registro-direccion/cliente-registro-direccion.component';
 import { CorporativoRegistroHorarioComponent } from './paginas/PaginasRegistro/corporativo-registro-horario/corporativo-registro-horario.component';
 import { BuscarProductosComponent } from './paginas/paginas-perfiles/perfil-vendedor/buscar-productos/buscar-productos.component';
+import { CatalogoProductosComponent } from './paginas/paginas-perfiles/perfil-vendedor/catalogo-productos/catalogo-productos.component';
+import { CatalogoClientesComponent } from './paginas/paginas-perfiles/perfil-vendedor/catalogo-clientes/catalogo-clientes.component';
 
 const routes: Routes = [
   {path: '', component: PaginaPrincipalComponent},
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path: 'registro-direccion', component: ClienteRegistroDireccionComponent},
   {path: 'registro-horario', component: CorporativoRegistroHorarioComponent},
   {path: 'buscar-productos-vendedor', component: BuscarProductosComponent},
+  {path: 'catalogo-productos', component: CatalogoProductosComponent},
+  {path: 'catalogo-clientes', component: CatalogoClientesComponent}
 ];
 
 @NgModule({

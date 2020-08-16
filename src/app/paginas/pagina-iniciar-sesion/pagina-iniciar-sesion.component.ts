@@ -47,8 +47,14 @@ export class PaginaIniciarSesionComponent implements OnInit {
   }
 
   validarUsuario(_contrasenia: String, _nombreUsuario: String){
-    this.verificandoUsuario = true;
-    this.apollo.query({
+    if(this.inicioSesionService.usuarioActual.getContrasenia() == _contrasenia 
+    && this.inicioSesionService.usuarioActual.getNombreUsuario() == _nombreUsuario) {
+      this.usuarioRegistrado = true;
+      let ruta = "perfil-vendedor-informacionPersonal";
+      this.router.navigate([ruta]);
+    }
+    //this.verificandoUsuario = true;
+    /*this.apollo.query({
       query: verificarContrasenia,
       variables: {
         contrasenia: _contrasenia,
@@ -66,7 +72,7 @@ export class PaginaIniciarSesionComponent implements OnInit {
           this.usuarioRegistrado = false;
           this.verificandoUsuario = false;
         }
-    });
+    });*/
   }
 
   extraerInformacionCliente(_contrasenia: String, _nombreUsuario: String){

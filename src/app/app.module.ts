@@ -36,6 +36,8 @@ import { PaginaProductosVisitanteComponent } from './paginas/pagina-productos-vi
 import { BuscarProductosClienteComponent } from './pages/perfil-cliente-/buscar-productos-cliente/buscar-productos-cliente.component';
 import { EncabezadoClienteProductosComponent } from './encabezados/encabezado-cliente-productos/encabezado-cliente-productos.component';
 import { FacturarProductosClienteComponent } from './pages/perfil-vendedor-/facturar-productos-cliente/facturar-productos-cliente.component';
+import { CatalogoProductosComponent } from './paginas/perfil-vendedor/catalogo-productos/catalogo-productos.component';
+import { CatalogoClientesComponent } from './paginas/paginas-perfiles/perfil-vendedor/catalogo-clientes/catalogo-clientes.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { FacturarProductosClienteComponent } from './pages/perfil-vendedor-/fact
     BuscarProductosClienteComponent,
     EncabezadoClienteProductosComponent,
     FacturarProductosClienteComponent,
+    CatalogoProductosComponent,
+    CatalogoClientesComponent,
   ],
   imports: [
     BrowserModule,

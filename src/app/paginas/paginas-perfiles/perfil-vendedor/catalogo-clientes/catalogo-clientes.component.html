@@ -1,0 +1,318 @@
+<app-encabezado-vendedor></app-encabezado-vendedor>
+
+<div class="hero-wrap hero-wrap-2" style="background-image: url('assets/images/bg_3.jpeg');"
+    data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-start">
+            <div class="col-md-12 ftco-animate text-center mb-5">
+                <h1 class="mb-3 bread">Catálogo de productos</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section bg-light"
+    style="padding-top: 0%; padding-bottom: 0%; background-color: #ecf8f8 !important;">
+    <div class="container">
+        <div class="row">
+            <form class="search-form mb-3 col-lg-9 pr-lg-4">
+                <div class="form-group" style="align-content: center;">
+                    <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0" style="padding-left: 18%;">
+                        <button id="sortAsc" class="btn btn-primary py-2"
+                            style="background-color: #fd7e14; border: 1px solid #fd7e14; cursor: pointer; margin-right: 1%;">
+                            Nuevo cliente</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row col-lg-12 align-items-center" style="padding-left: 15%;">
+            <div class="reglist" style="background-color: white !important;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th style="cursor: pointer !important;" (click)="ordenarPor('nombre')">Nombre
+                                <i *ngIf="!reverse && predicate == 'nombre'" class="fa fa-caret-up"
+                                    aria-hidden="true"></i>
+                                <i *ngIf="reverse  && predicate == 'nombre'" class="fa fa-caret-down"
+                                    aria-hidden="true"></i>
+                            </th>
+                            <th>Primer apellido</th>
+                            <th>Segundo apellido</th>
+                            <th>Teléfono 1</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <label *ngIf="this.vendedorService.catalogoClientes.length == 0">No hay clientes para
+                            mostrar</label>
+                        <tr
+                            *ngFor="let cliente of vendedorService.catalogoClientes | orderBy:predicate:reverse:true | paginate: config; let i = index">
+                            <th>{{((config.currentPage - 1) * config.itemsPerPage + i) + 1}}</th>
+                            <td>{{cliente.getNombre()}}</td>
+                            <td>{{cliente.getApellido1()}}</td>
+                            <td>{{cliente.getApellido2()}}</td>
+                            <td>{{cliente.getTelefono1()}}</td>
+                            <td>
+                                <button type="button" class="btn btn-info"
+                                    (click)="setIndex((config.currentPage - 1) * config.itemsPerPage + i)"
+                                    data-toggle="modal" data-target="#verCliente"><i class="fa fa-eye fa-lg"
+                                        aria-hidden="true"></i></button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary"><i class="fa fa-pencil fa-lg"
+                                        aria-hidden="true"></i></button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger"
+                                    (click)="setIndex((config.currentPage - 1) * config.itemsPerPage + i)"
+                                    data-toggle="modal" data-target="#DeseaEliminarCliente"><i class="fa fa-trash fa-lg"
+                                        aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div class="row col-lg-12 align-items-center" style="padding-left: 30%;">
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <pagination-template id="pagination" #p="paginationApi" [id]="config.id"
+                                (pageChange)="config.currentPage = $event">
+                                <div class="custom-pagination">
+                                    <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+                                        <span *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                                            < </span>
+                                    </div>
+                                    <div class="page-number" *ngFor="let page of p.pages"
+                                        [class.current]="p.getCurrent() === page.value">
+                                        <span (click)="p.setCurrent(page.value)"
+                                            *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+                                        <div *ngIf="p.getCurrent() === page.value">
+                                            <span>{{ page.label }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="pagination-next" [class.disabled]="p.isLastPage()">
+                                        <span *ngIf="!p.isLastPage()" (click)="p.next()"> > </span>
+                                    </div>
+                                </div>
+
+                            </pagination-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="modal fade" id="DeseaEliminarCliente" tabindex="-1" role="dialog" data-backdrop="static"
+            aria-labelledby="eliminarClienteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eliminarClienteLabel">Eliminar cliente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="align-content: center;">
+                        <div class="field-wrap">
+                            <label style="margin-right: 5px;">Si continua se eliminará el cliente
+                                definitivamente</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="eliminarCliente()"
+                            data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="modal fade" id="verCliente" tabindex="-1" role="dialog"
+            aria-labelledby="verClienteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 640px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="verClienteLabel">Información personal cliente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div *ngIf="this.vistaInformacionPersonal" class="modal-body" style="align-content: center;">
+                        <div *ngIf="this.indexCliente != -1" class="tab-content py-4 customForm">
+                            <div class="tab-pane active" id="info">
+                                <form role="form">
+                                    <div class="form-group row col-lg-12 col-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Nombre de usuario</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getNombreUsuario()}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="font-weight-bold">Contraseña</label>
+                                                    <div>
+                                                        <input type="password" disabled="true" id="password"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getContrasenia()}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2" style="padding-left: 60px;">
+                                                    <label class="font-weight-bold"
+                                                        style="color: white !important;">Contraseña</label>
+                                                    <div>
+                                                        <i *ngIf="this.contraseniaOculta" class="fa fa-eye fa-lg"
+                                                            aria-hidden="true" style=" color: black; cursor: pointer;"
+                                                            (click)="mostrarContrasenia()"></i>
+                                                        <i *ngIf="!this.contraseniaOculta" class="fa fa-eye-slash fa-lg"
+                                                            aria-hidden="true" style=" color: black; cursor: pointer;"
+                                                            (click)="mostrarContrasenia()"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group row col-lg-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Nombre</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getNombreCompleto()}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Fecha de nacimiento</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getFechaNacimiento()}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group row col-lg-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Identificación</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getID()}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Tipo de identificación</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getTipoID()}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group row col-lg-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Teléfono primario</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getTelefono1()}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Teléfono secundario</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getTelefono2()}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group row col-lg-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <button type="button" class="btn btn-success"
+                                                    (click)="cambiarVistaModalInformacion()">Ver datos dirección</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!this.vistaInformacionPersonal" class="modal-body" style="align-content: center;">
+                        <div *ngIf="this.indexCliente != -1" class="tab-content py-4 customForm">
+                            <div class="tab-pane active" id="info">
+                                <form role="form">
+                                    <div class="form-group row col-lg-12 col-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Provincia</label>
+                                                    <div>
+                                                        <input disabled="true"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getProvincia()}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Cantón</label>
+                                                    <div>
+                                                        <input type="text" disabled="true" id="password"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getCanton()}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="font-weight-bold">Distrito</label>
+                                                    <div>
+                                                        <input type="text" disabled="true" id="password"
+                                                            value="{{this.vendedorService.catalogoClientes[this.indexCliente].getDistrito()}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group row col-lg-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <button type="button" class="btn btn-success"
+                                                    (click)="cambiarVistaModalInformacion()">Ver información</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

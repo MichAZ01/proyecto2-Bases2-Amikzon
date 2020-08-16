@@ -11,7 +11,7 @@ import { Apollo } from 'apollo-angular';
   providedIn: 'root'
 })
 export class InicioSesionUsuariosService {
-  usuarioActual:Usuario = new Usuario("", "", "", "", "");
+  usuarioActual:Usuario = new Usuario("mich", "Michaz01", "Física", "402450322", "vendedor")
 
   constructor(private apollo: Apollo) {
 
